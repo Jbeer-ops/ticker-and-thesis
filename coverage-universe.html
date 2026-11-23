@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ticker &amp; Thesis | Equity research portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600;700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F6F8;--surface:#fff;--ink:#0E1B33;--muted:#5B6679;--line:#D9DFE7;--accent:#1F4FD8;--buy:#14804A;--hold:#A66A00;--sell:#B3261E;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0B1220;--surface:#121B2E;--ink:#E8EDF5;--muted:#93A0B5;--line:#243049;--accent:#7FA2FF;--buy:#4CC38A;--hold:#E0A93B;--sell:#F07A72;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0B1220;--surface:#121B2E;--ink:#E8EDF5;--muted:#93A0B5;--line:#243049;--accent:#7FA2FF;--buy:#4CC38A;--hold:#E0A93B;--sell:#F07A72;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 "Public Sans",system-ui,sans-serif}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header{border-bottom:1px solid var(--line)}
+header .wrap{display:flex;justify-content:space-between;align-items:center;height:60px}
+.brand{font:700 20px "Spectral",Georgia,serif;text-decoration:none}
+nav{display:flex;gap:20px;align-items:center}
+nav a{text-decoration:none;color:var(--muted);font-size:15px}
+nav a:hover,nav a.on{color:var(--ink)}
+#th{background:none;border:1px solid var(--line);color:var(--ink);border-radius:6px;padding:4px 10px;font:inherit;font-size:14px;cursor:pointer}
+h1,h2,h3{font-family:"Spectral",Georgia,serif;line-height:1.15;margin:0}
+.hero{padding:64px 0 36px}
+.hero h1{font-size:clamp(34px,6vw,58px);font-weight:700;max-width:16ch;letter-spacing:-.01em}
+.hero p{max-width:56ch;color:var(--muted);font-size:18px;margin:18px 0 0}
+.bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin:8px 0 20px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--surface);border:1px solid var(--line);color:var(--ink);border-radius:999px;padding:5px 14px;font:inherit;font-size:14px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+select{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px 10px;font:inherit;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:18px;padding-bottom:64px}
+.card{display:block;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;text-decoration:none}
+.card:hover{border-color:var(--accent)}
+.top{display:flex;justify-content:space-between;align-items:flex-start}
+.tick{font:700 30px "Spectral",Georgia,serif}
+.name{color:var(--muted);font-size:14px}
+.pill{font-weight:600;font-size:13px;border:1.5px solid currentColor;border-radius:6px;padding:1px 9px}
+.Buy{color:var(--buy)}.Hold{color:var(--hold)}.Sell{color:var(--sell)}
+svg.sp{width:100%;height:64px;margin:14px 0 8px;display:block}
+.nums{display:flex;gap:22px;font-size:14px;color:var(--muted)}
+.nums b{display:block;color:var(--ink);font-size:17px;font-weight:600}
+.th{margin:14px 0 10px;font-size:15px}
+.meta{font-size:13px;color:var(--muted)}
+.feat{font-size:12px;color:var(--accent);font-weight:600;margin-left:8px}
+.back{display:inline-block;margin:28px 0 8px;color:var(--muted);text-decoration:none;font-size:15px}
+.dh{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:flex-end;padding:8px 0 24px;border-bottom:1px solid var(--line)}
+.dh h1{font-size:clamp(40px,7vw,64px)}
+.lay{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;padding:32px 0 64px}
+@media(max-width:800px){.lay{grid-template-columns:1fr}}
+.lay h2{font-size:24px;margin-bottom:12px}
+.thesis{font:400 19px/1.65 "Spectral",Georgia,serif;max-width:60ch}
+.kn{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:24px 0}
+.kn div{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-size:14px;color:var(--muted)}
+.kn b{display:block;font-size:22px;color:var(--ink);font-family:"Spectral",Georgia,serif}
+.dl{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin-bottom:12px;text-decoration:none}
+.dl:hover{border-color:var(--accent)}
+.dl span{font-size:13px;color:var(--muted)}
+.dl strong{display:block;font-weight:600}
+.note{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding:20px 0 40px}
+.about{max-width:62ch;padding:56px 0 80px}
+.about h1{font-size:44px;margin-bottom:20px}
+.about p{font-size:18px}
+.btn{display:inline-block;background:var(--ink);color:var(--bg);padding:9px 18px;border-radius:6px;text-decoration:none;font-weight:600;margin:6px 8px 0 0}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<a class="brand" href="#">Ticker &amp; Thesis</a>
+<nav><a href="#" id="n1">Research</a><a href="#about" id="n2">About</a><button id="th" aria-label="Toggle theme">Theme</button></nav>
+</div></header>
+<main class="wrap" id="app"></main>
+<script>
+var D=[
+{t:'AMZN',n:'Amazon.com',s:'Technology',r:'Buy',p:212,tp:245,d:'2026-10-14',f:1,th:'AWS reacceleration and retail margin expansion are underpriced; advertising is the quiet profit engine.',k:['11%','12.8%','14.2x']},
+{t:'COST',n:'Costco Wholesale',s:'Consumer',r:'Hold',p:985,tp:1010,d:'2026-08-02',f:1,th:'Best-in-class operator, but the membership flywheel already trades at a full premium.',k:['8%','3.9%','28.5x']},
+{t:'JPM',n:'JPMorgan Chase',s:'Financials',r:'Buy',p:268,tp:300,d:'2026-05-19',f:0,th:'Scale advantage and resilient net interest income support returns above the cost of equity.',k:['5%','n/a','2.4x TBV']},
+{t:'NKE',n:'Nike',s:'Consumer',r:'Sell',p:78,tp:64,d:'2026-03-07',f:0,th:'Turnaround costs and wholesale resets weigh on margins longer than consensus expects.',k:['2%','7.1%','18.0x']}
+];
+var app=document.getElementById('app'),sec='All',sort='Featured';
+function up(c){return (c.tp/c.p-1)*100}
+function fm(x){return (x>=0?'+':'')+x.toFixed(1)+'%'}
+function spark(c){
+ var s=0;for(var i=0;i<c.t.length;i++)s+=c.t.charCodeAt(i)*(i+3);
+ function rnd(){s=(s*9301+49297)%233280;return s/233280}
+ var a=[c.p],i;for(i=0;i<29;i++)a.unshift(a[0]*(1+(rnd()-.5)*.05));
+ var all=a.concat([c.tp]),mn=Math.min.apply(null,all),mx=Math.max.apply(null,all),W=300,H=64;
+ function Y(v){return 6+(H-12)*(1-(v-mn)/(mx-mn||1))}
+ var pts=a.map(function(v,j){return (j*W/29).toFixed(1)+','+Y(v).toFixed(1)}).join(' ');
+ var ty=Y(c.tp).toFixed(1);
+ return '<svg class="sp" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" aria-hidden="true"><line x1="0" x2="'+W+'" y1="'+ty+'" y2="'+ty+'" stroke="var(--muted)" stroke-dasharray="4 4" vector-effect="non-scaling-stroke"/><polyline points="'+pts+'" fill="none" stroke="var(--accent)" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>';
+}
+function home(){
+ var secs=['All'].concat(D.map(function(c){return c.s}).filter(function(v,i,a){return a.indexOf(v)===i}));
+ var list=D.filter(function(c){return sec==='All'||c.s===sec});
+ list.sort(function(a,b){return sort==='Newest'?b.d.localeCompare(a.d):sort==='Upside'?up(b)-up(a):(b.f-a.f)||b.d.localeCompare(a.d)});
+ app.innerHTML='<section class="hero"><h1>Equity research, built from the model up.</h1><p>We’re [Name] and [Name], finance students. For each company we cover, we build a financial model, write a research report and present the thesis. Everything is here, dated and open to review.</p></section>'+
+ '<div class="bar"><div class="chips">'+secs.map(function(x){return '<button class="chip" aria-pressed="'+(x===sec)+'" data-s="'+x+'">'+x+'</button>'}).join('')+'</div><label class="meta">Sort by <select id="so">'+['Featured','Newest','Upside'].map(function(x){return '<option'+(x===sort?' selected':'')+'>'+x+'</option>'}).join('')+'</select></label></div>'+
+ '<div class="grid">'+list.map(function(c){var u=up(c);return '<a class="card" href="#'+c.t.toLowerCase()+'"><div class="top"><div><div class="tick">'+c.t+(c.f?'<span class="feat">Featured</span>':'')+'</div><div class="name">'+c.n+' · '+c.s+'</div></div><span class="pill '+c.r+'">'+c.r+'</span></div>'+spark(c)+'<div class="nums"><span>Price<b>$'+c.p+'</b></span><span>Target<b>$'+c.tp+'</b></span><span>Upside<b class="'+(u<0?'Sell':u>5?'Buy':'Hold')+'">'+fm(u)+'</b></span></div><p class="th">'+c.th+'</p><div class="meta">Published '+c.d+'</div></a>'}).join('')+'</div>'+
+ '<p class="note">Placeholder companies and numbers shown for layout only. Replace them with your own work.</p>';
+ app.querySelectorAll('.chip').forEach(function(b){b.onclick=function(){sec=b.dataset.s;home()}});
+ document.getElementById('so').onchange=function(e){sort=e.target.value;home()};
+}
+function detail(c){
+ var u=up(c);
+ app.innerHTML='<a class="back" href="#">← All research</a><div class="dh"><div><h1>'+c.t+'</h1><div class="name">'+c.n+' · '+c.s+'</div></div><div style="text-align:right"><span class="pill '+c.r+'">'+c.r+'</span><div class="meta" style="margin-top:6px">Target $'+c.tp+' vs. $'+c.p+' ('+fm(u)+')</div></div></div>'+
+ '<div class="lay"><div><h2>The thesis</h2><p class="thesis">'+c.th+' Replace this paragraph with your 3 to 4 sentence summary: what the market is missing, what drives your forecast, and what would prove you wrong.</p><div class="kn"><div>Revenue CAGR (5y)<b>'+c.k[0]+'</b></div><div>EBIT margin (FY27E)<b>'+c.k[1]+'</b></div><div>Valuation (FY27E)<b>'+c.k[2]+'</b></div><div>Implied upside<b>'+fm(u)+'</b></div></div></div>'+
+ '<div><h2>Deliverables</h2><a class="dl" href="#'+c.t.toLowerCase()+'"><div><strong>Financial model</strong><span>Excel · 3 statements, DCF, comps</span></div><span>Download</span></a><a class="dl" href="#'+c.t.toLowerCase()+'"><div><strong>Research report</strong><span>PDF · 12 pages</span></div><span>Read</span></a><a class="dl" href="#'+c.t.toLowerCase()+'"><div><strong>Presentation</strong><span>Slides · 10 pages</span></div><span>View</span></a></div></div>'+
+ '<p class="note">Published '+c.d+'. Based on filings and market data available at that date. Prices are placeholders.</p>';
+ window.scrollTo(0,0);
+}
+function about(){
+ app.innerHTML='<section class="about"><h1>About</h1><p>I’m [Your Name], studying [Your Degree] at [Your University]. I started covering companies to learn how a business turns into a valuation, and to practice defending a view with numbers.</p><p>Each project follows the same steps: model, report, presentation. You can compare my first one with my latest to see how my work has improved.</p><a class="btn" href="#about">Resume (PDF)</a><a class="btn" href="#about">LinkedIn</a></section>';
+}
+function route(){
+ var h=location.hash.slice(1),c=D.filter(function(x){return x.t.toLowerCase()===h})[0];
+ document.getElementById('n1').className=(!h||c)?'on':'';document.getElementById('n2').className=h==='about'?'on':'';
+ if(h==='about')about();else if(c)detail(c);else home();
+ if(!c&&h!=='about')window.scrollTo(0,0);
+}
+document.getElementById('th').onclick=function(){
+ var r=document.documentElement,dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches;
+ r.dataset.theme=dark?'light':'dark';
+};
+window.addEventListener('hashchange',route);route();
+</script>
+</body>
+</html>
